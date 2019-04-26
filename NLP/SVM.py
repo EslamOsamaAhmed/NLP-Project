@@ -27,7 +27,7 @@ import nltk
 import random
 from sklearn.metrics import classification_report
 
-datasetname = "DataSets/Dataset-1Charts/dataset-1.csv"
+datasetname = "DataSets/Dataset-3Charts/dataset-3.csv"
 
 data = pd.read_csv(datasetname,encoding='latin-1')
 data.head()
