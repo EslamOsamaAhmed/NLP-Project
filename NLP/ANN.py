@@ -73,10 +73,10 @@ features_train, features_test, labels_train, labels_test = train_test_split(feat
 classifier = Sequential()
 
 # Adding the input layer and the first hidden layer
-classifier.add(Dense(output_dim = 3900, init = 'uniform', activation = 'relu', input_dim = 8035))
+classifier.add(Dense(output_dim = int(features.shape[0]), init = 'uniform', activation = 'relu', input_dim = features.shape[1]))
 
 # Adding the second hidden layer
-classifier.add(Dense(output_dim = 1950, init = 'uniform', activation = 'relu'))
+classifier.add(Dense(output_dim = int(features.shape[0] / 2), init = 'uniform', activation = 'relu'))
 
 # Adding the output layer
 classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'sigmoid'))
@@ -85,7 +85,7 @@ classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'sigmoid'))
 classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
 
 # Fitting the ANN to the Training set
-classifier.fit(features_train, labels_train, batch_size = 200, nb_epoch = 2)
+classifier.fit(features_train, labels_train, batch_size = 5000, nb_epoch = 2)
 
 classifier.summary()
 classifier.compile(loss='mse',
