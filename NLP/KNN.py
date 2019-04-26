@@ -29,12 +29,12 @@ import pickle
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report
 
-datasetname = "DataSets/dataset-1.csv"
+datasetname = "DataSets/Dataset-1Charts/dataset-1.csv"
 
 data = pd.read_csv(datasetname,encoding='latin-1')
 data.head()
 
-if(datasetname == "DataSets/dataset-2.csv"):
+if(datasetname == "DataSets/Dataset-2Charts/dataset-2.csv"):
    data=data.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
 
 data=data.rename(columns={"v1":"class", "v2":"text"})
