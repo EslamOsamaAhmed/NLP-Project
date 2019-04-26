@@ -24,10 +24,11 @@ from sklearn import feature_extraction
 from scipy import sparse
 from scipy.sparse import csr_matrix
 import nltk
+from sklearn.metrics import confusion_matrix
 import random
 from sklearn.metrics import classification_report
 
-datasetname = "DataSets/Dataset-3Charts/dataset-3.csv"
+datasetname = "DataSets/Dataset-2Charts/dataset-2.csv"
 
 data = pd.read_csv(datasetname,encoding='latin-1')
 data.head()
@@ -79,6 +80,8 @@ for x in range (1, 6):
     
     print("EVALUATION ON TESTING DATA")
     print(classification_report(labels_test, prediction))
+    
+cm = confusion_matrix(labels_test, prediction)
 
 #########################################################################
 
