@@ -1,0 +1,96 @@
+Introduction : 
+
+K-Nearest Neighbors algorithm (or k-NN for short) is a non-parametric method used for classification and regression.[1] In both cases, the input consists of the k closest training examples in the feature space. The output depends on whether k-NN is used for classification or regression:
+
+In k-NN classification, the output is a class membership. An object is classified by a majority vote of its neighbors, with the object being assigned to the class most common among its k nearest neighbors (k is a positive integer, typically small). If k = 1, then the object is simply assigned to the class of that single nearest neighbor.
+
+In k-NN regression, the output is the property value for the object. This value is the average of the values of its k nearest neighbors. (Reference Wikipedia)
+
+*******************************
+
+Problems faced when optimizing KNN code:
+
+The main concern with optimizing the KNN classifier is to select the right number of neighbors K and the distance function to be considered.
+
+
+******************************
+
+
+Conclusion :
+
+In terms of values of K When we tried picking very small values for K that is 1 or 2 then the knn classifier was over fitting the dataset. Because it was trying to build individual data points with their own individual decision boundaries. So, the classifier was performing better on training dataset that is was giving better accuracies on it whereas on test dataset the accuracy was getting reduced.
+
+When we tried picking very large value for K that is 50 or more then the knn classifier was under fitting the dataset. Because, it is not fitting the input data properly. So, the classifier was not performing better on train as well as test dataset.
+
+
+*********************************
+
+
+requirments : 
+
+Python 3.x
+numpy
+scikit-learn
+scipy
+
+ *******************************
+
+Packages for visualization :
+
+import numpy as np
+%matplotlib inline
+import matplotlib.pyplot as plt
+
+*************************************
+
+Dataset Format : 
+
+CSV (Comma Separated Values) format.
+Attributes can be integer or real values.
+List attributes first, and add response as the last parameter in each row.
+E.g. [4.5, 7, 2.6, "Orange"], where the first 3 numbers are values of attributes and "Orange" is one of the response classes.
+Another example can be [1.2, 4.3, 3], in this case there are 2 attributes while the response class is the integer 3.
+The square brackets are shown for convenience in reading, don't put them in your CSV file.
+Responses can be integer, real or categorical.
+
+***************************************
+
+
+Algorithm :
+
+It generates k * c new features, where c is the number of class labels. The new features are computed from the distances between the observations and their k nearest neighbors inside each class, as follows:
+
+The first test feature contains the distances between each test instance and its nearest neighbor inside the first class.
+The second test feature contains the sums of distances between each test instance and its 2 nearest neighbors inside the first class.
+The third test feature contains the sums of distances between each test instance and its 3 nearest neighbors inside the first class.
+And so on.
+This procedure repeats for each class label, generating k * c new features. Then, the new training features are generated using a n-fold CV approach, in order to avoid overfitting.
+
+************************************
+
+Overview of the different implementations (Python/R/Matlab) :
+
+Of the three implementations provided here, the Python implementation is the most thoroughly tested and the fastest. However, all implementations run reasonably fast - typically on the order of seconds or minutes for datasets containing < 5,000 cells. For larger datasets, we recommend using the Python implementation. The Python implementation also provides a command-line interface (see below), which makes it easy to use for non-Python users.
+
+We strive to ensure the correctness of all implementations and to make them all as consistent as possible. However, due to differences in terms of how the randomized PCA is implemented in each language, there are currently small differences in the exact results produced by each implementation. We appreciate any reports of inconsistencies or suggestions for improvements.
+
+*********************************
+
+Results : 
+
+
+
+
+
+
+
+
+********************************
+
+Notes :
+
+Keep the data set files in the working directory of project as defined by the IDE configuration.
+When running in stand alone mode (E.g. command line), keep the data sets in the same directory as the script.
+
+
+*****************************
