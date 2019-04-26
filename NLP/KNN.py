@@ -6,7 +6,6 @@ from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-import pickle
 from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
 import seaborn as sns
@@ -18,13 +17,21 @@ from scipy import sparse
 from scipy.sparse import csr_matrix
 import nltk
 import random
+import pickle
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
 
+datasetname = "DataSets/dataset-3.csv"
 
-data = pd.read_csv("spam.csv",encoding='latin-1')
+data = pd.read_csv(datasetname,encoding='latin-1')
 data.head()
-data=data.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
+
+if(datasetname == "DataSets/dataset-2.csv"):
+   data=data.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
+
 data=data.rename(columns={"v1":"class", "v2":"text"})
+data = data.dropna(subset=['class'])
+data = data.dropna(subset=['text'])
 data.head()
 data['length']=data['text'].apply(len)
 data.head()
@@ -42,9 +49,9 @@ plt.ylabel('')
 plt.show()
 
 #Categorize The Data to Ham, Spam
-ham =data[data['class'] == 'ham']['text'].str.len()
+ham =data[data['class'] == 1]['text'].str.len()
 sns.distplot(ham, label='Ham')
-spam = data[data['class'] == 'spam']['text'].str.len()
+spam = data[data['class'] == 0]['text'].str.len()
 
 #Histogram to visualize categorized Data
 sns.distplot(spam, label='Spam')
@@ -53,14 +60,14 @@ plt.legend()
 
 
 #find Most 30 Common Word in Spam and Ham Email
-count1 = Counter(" ".join(data[data['class']=='ham']["text"]).split()).most_common(30)
+count1 = Counter(" ".join(data[data['class']==1]["text"]).split()).most_common(30)
 
 data1 = pd.DataFrame.from_dict(count1)
 
 #find Most 30 Common Word in Ham Email
 data1 = data1.rename(columns={0: "words of ham", 1 : "count"})
 
-count2 = Counter(" ".join(data[data['class']=='spam']["text"]).split()).most_common(30)
+count2 = Counter(" ".join(data[data['class']==0]["text"]).split()).most_common(30)
 
 data2 = pd.DataFrame.from_dict(count2)
 
@@ -117,7 +124,7 @@ knn = KNeighborsClassifier(n_neighbors = k)
 # Fit training data to classifier
 knn.fit(features_train, labels_train)
 
-while k != 1:
+while k != 5:
     score = cross_validate(knn,features_train,labels_train, cv=fold)
     k_scores[k] = np.mean(score['test_score'])
     k += 1
@@ -134,13 +141,14 @@ print("The Real output: " + str(labels_test))
 
 final_score = accuracy_score(labels_test, test_prediction)
 
-print("The Accuracy of prediction: " + str(labels_test))
+print("The Accuracy of prediction: " + str(final_score))
 
-#########################################################################
+print("EVALUATION ON TESTING DATA")
+print(classification_report(labels_test, test_prediction))
 
 #Save Model traning Result
-filename = 'finalized_model_Spam_Ham.sav'
-pickle.dump(svc, open(filename, 'wb'))
+filename = 'finalized_model_Spam_Ham_KNN.sav'
+pickle.dump(knn, open(filename, 'wb'))
 
 
 # load the model from disk

@@ -25,12 +25,19 @@ from keras.utils import np_utils
 from keras.callbacks import ModelCheckpoint,CSVLogger
 from keras import backend as k
 import scipy.io as io 
+from sklearn.metrics import classification_report
 
+datasetname = "DataSets/dataset-3.csv"
 
-data = pd.read_csv("DataSets/dataset-2.csv",encoding='latin-1')
+data = pd.read_csv(datasetname,encoding='latin-1')
 data.head()
-data=data.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
+
+if(datasetname == "DataSets/dataset-2.csv"):
+   data=data.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
+
 data=data.rename(columns={"v1":"class", "v2":"text"})
+data = data.dropna(subset=['class'])
+data = data.dropna(subset=['text'])
 data.head()
 data['length']=data['text'].apply(len)
 data.head()
@@ -109,30 +116,8 @@ textFeatures = textFeatures.apply(pre_process)
 vectorizer = TfidfVectorizer("english")
 features = vectorizer.fit_transform(textFeatures)
 
-
-#from sklearn.preprocessing import LabelEncoder
-#labelencoder_X = LabelEncoder()
-#features_1= labelencoder_X.fit_transform(features)
-
 #Split Data after Preprocessing to Training set & Testing set with it's Labels
-features_train, features_test, labels_train, labels_test = train_test_split(features, data['class'], test_size=0.3, random_state=111)
-
-"""#five Batches to find the Acc of Training set, Testing Set for the ML Model
-for x in range (1, 6):
-    #Activation Function Sigmoid
-    svc = SVC(kernel='sigmoid', gamma=1)
-    
-    #Train Model to Classify between Ham and Spam Emails by Fit()
-    svc.fit(features_train, labels_train)
-    prediction = svc.predict(features_test)
-    
-    #Accuracy of Testing Set
-    print("Accuracy Test", accuracy_score(labels_test,prediction))
-    
-    #Accuracy of Training Set
-    print("Accuracy Traning", svc.score(features_train, labels_train))"""
-
-
+features_train, features_test, labels_train, labels_test = train_test_split(features, data['class'], test_size=0.3, random_state=111)    
 
 classifier = Sequential()
 
@@ -147,7 +132,6 @@ classifier.add(Dense(output_dim = 1, init = 'uniform', activation = 'sigmoid'))
 
 # Compiling the ANN
 classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
-
 
 # Fitting the ANN to the Training set
 classifier.fit(features_train, labels_train, batch_size = 195, nb_epoch = 2)
@@ -167,16 +151,19 @@ y_pred = (y_pred > 0.5)
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(labels_test, y_pred)
 
+print("EVALUATION ON TESTING DATA")
+print(classification_report(labels_test, y_pred))
+
 
 #########################################################################
 
 #Save Model traning Result
-"""filename = 'finalized_model_Spam_Ham.sav'
-pickle.dump(svc, open(filename, 'wb'))
+filename = 'finalized_model_Spam_Ham_ANN.sav'
+pickle.dump(classifier, open(filename, 'wb'))
 
 
 # load the model from disk
-loaded_model = pickle.load(open(filename, 'rb'))"""
+loaded_model = pickle.load(open(filename, 'rb'))
 
 #def pre_process(text):
 #    

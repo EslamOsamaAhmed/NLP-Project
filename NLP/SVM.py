@@ -17,13 +17,19 @@ from scipy import sparse
 from scipy.sparse import csr_matrix
 import nltk
 import random
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
 
+datasetname = "DataSets/dataset-3.csv"
 
-data = pd.read_csv("spam.csv",encoding='latin-1')
+data = pd.read_csv(datasetname,encoding='latin-1')
 data.head()
-data=data.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
+
+if(datasetname == "DataSets/dataset-2.csv"):
+   data=data.drop(["Unnamed: 2", "Unnamed: 3", "Unnamed: 4"], axis=1)
+
 data=data.rename(columns={"v1":"class", "v2":"text"})
+data = data.dropna(subset=['class'])
+data = data.dropna(subset=['text'])
 data.head()
 data['length']=data['text'].apply(len)
 data.head()
@@ -41,9 +47,9 @@ plt.ylabel('')
 plt.show()
 
 #Categorize The Data to Ham, Spam
-ham =data[data['class'] == 'ham']['text'].str.len()
+ham =data[data['class'] == 1]['text'].str.len()
 sns.distplot(ham, label='Ham')
-spam = data[data['class'] == 'spam']['text'].str.len()
+spam = data[data['class'] == 0]['text'].str.len()
 
 #Histogram to visualize categorized Data
 sns.distplot(spam, label='Spam')
@@ -52,14 +58,14 @@ plt.legend()
 
 
 #find Most 30 Common Word in Spam and Ham Email
-count1 = Counter(" ".join(data[data['class']=='ham']["text"]).split()).most_common(30)
+count1 = Counter(" ".join(data[data['class']==1]["text"]).split()).most_common(30)
 
 data1 = pd.DataFrame.from_dict(count1)
 
 #find Most 30 Common Word in Ham Email
 data1 = data1.rename(columns={0: "words of ham", 1 : "count"})
 
-count2 = Counter(" ".join(data[data['class']=='spam']["text"]).split()).most_common(30)
+count2 = Counter(" ".join(data[data['class']==0]["text"]).split()).most_common(30)
 
 data2 = pd.DataFrame.from_dict(count2)
 
@@ -119,11 +125,14 @@ for x in range (1, 6):
     
     #Accuracy of Training Set
     print("Accuracy Traning", svc.score(features_train, labels_train))
+    
+    print("EVALUATION ON TESTING DATA")
+    print(classification_report(labels_test, prediction))
 
 #########################################################################
 
 #Save Model traning Result
-filename = 'finalized_model_Spam_Ham.sav'
+filename = 'finalized_model_Spam_Ham_SVM.sav'
 pickle.dump(svc, open(filename, 'wb'))
 
 

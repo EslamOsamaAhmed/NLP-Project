@@ -17,15 +17,15 @@ spam = [[]]
 emails = [[]]
 
 # Ham File
-for filename in os.listdir("enron3/enron3/ham/"):  
-    file1 = open("enron3/enron3/ham/" + filename,"r+")
-    ham.append([file1.read(),"ham"])
+for filename in os.listdir("enron4/ham/"):  
+    file1 = open("enron4/ham/" + filename,"rb")
+    ham.append([1,file1.read()])
     
 # Spam File
-for filename in os.listdir("enron3/enron3/spam/"):  
-    with codecs.open("enron3/enron3/spam/" + filename, 'r', encoding='utf-8',
+for filename in os.listdir("enron4/spam/"):  
+    with codecs.open("enron4/spam/" + filename, 'rb',
                  errors='ignore') as fdata:
-                    spam.append([fdata.read(),"spams"])
+                    spam.append([0,fdata.read()])
 
 # Merge two Lists
 emails = ham + spam
@@ -34,8 +34,8 @@ emails = ham + spam
 random.shuffle(emails) 
     
 # Create the pandas DataFrame 
-df = pd.DataFrame(emails, columns = ['text', 'label'])
+df = pd.DataFrame(emails, columns = ['v1', 'v2'])
 
 # Convert DF to CSV
-df.to_csv (r'C:\Users\Eslam\Desktop\NLP\spam-ham1.csv', index = None, header=True)
+df.to_csv (r'DataSets/spam-ham.csv', index = None, header=True)
 
