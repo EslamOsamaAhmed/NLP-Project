@@ -264,7 +264,7 @@ Finally saving The accuracy of deffering the predections and the real test label
      accuracy_score(labels_test,prediction).
 ```
 
-#RNN (Recurrent Neural Network):
+## RNN (Recurrent Neural Network):
 
     **A recurrent neural network (RNN)** is a class of artificial neural network where connections between nodes form a directed graph along a temporal sequence.
     This allows it to exhibit temporal dynamic behavior. Unlike feedforward neural networks, RNNs can use their internal state (memory) to process sequences of inputs. This makes them applicable to tasks such as unsegmented, connected handwriting recognition or speech recognition.
@@ -290,7 +290,7 @@ Finally saving The accuracy of deffering the predections and the real test label
     sequences = tok.texts_to_sequences(X_train)
     sequences_matrix = sequence.pad_sequences(sequences,maxlen=max_len)
 
-# RNN Tockenize:
+## RNN Tockenize:
     the input sentence to have the important words of the inputs to get it to the layers 
     with putting the maximum length of the word and the maximum words that will be as input in the Mail.
     And fit these on Traning Mails to fit the tokenz on it using tok the convert it to using 
@@ -315,13 +315,13 @@ Training Acc & Testing Acc of Models and the Learning of Models are Saved in .sa
 
 ALL Visualizations of Datasets (dataset-1, dataset-2, dataset-2) are saved as graphs and plots in DataSets file with its Charts.
 
-# Authors
+## Authors
 
     Eslam Osama Ahmed
     Heba Gamal Aldin
     Eman Hesham
 
-# License
+## License
     This project is licensed under the FCIH License
 
 
