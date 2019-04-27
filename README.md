@@ -2,26 +2,29 @@
 # Project Overview :
 	We Have A Binary Classification Problem of defining whether the E-mail Is a spam or ham Email.
 
+## DataSets Link:
+    [Enron DataSet](https://www.kaggle.com/wcukierski/enron-email-dataset)
+    [Enron Mail](http://www.enron-mail.com/)
+    [Enron Mail Folders](http://www2.aueb.gr/users/ion/data/enron-spam/)
+    
 ## DataSets :
 	1) " dataset-1.csv " -> IS A labeled dataset consists of 5175  Record (or "spam and ham E-mails observations ").
 	2) " dataset-2.csv " -> IS A labeled dataset consists of 5573  Record (or "spam and ham E-mails observations ").
 	3) " dataset-3.csv " -> IS A labeled dataset consists of 30000 Record (or "spam and ham E-mails observations ").
 
+## Prerequests:
+    install numpy, keras, sklearn, pandas, matplotlib  
+
 ## DataSets Preprocessing :
 	Our Three Datasets were four folders ('enron1 , enron2 , enron3 , enron4') each separated to spam file consists of spams.txt ('spam emails observations in txt files format') and the same for hams.txt ('ham emails observations  in txt files format') , so we made some processing steps on those folders for converting it to ('spam-ham.csv') file .
-	=》 Firstly , we Imported the necessary libraris we have used :
+    Firstly , we Imported the necessary libraris we have used
 
-## Prerequests:
-    install numpy, keras, sklearn, pandas, matplotlib
-  
-## DataSets Preprocessing :
+## DataSets Preprocessing Imports:
 ```python
-    **
     import os
     import pandas as pd 
     import codecs        # For Opening .txt files 
     import random
-    **
 ```
 	=》 Then , defining A set for each class :
 
@@ -34,11 +37,12 @@
 
 Then , by two 'for' loops we have iterated to open those text files to read and append them respectevely at thier pre-defined lists :
 
-**
-	# Ham File
+# Ham File
+```python
 	for filename in os.listdir("enron4/enron4/ham/"):  
    	   file = open("enron4/enron4/ham/" + filename,"r+")
    	   ham.append([file.read(),"ham"])
+```
 
 # Spam File
 ```python
