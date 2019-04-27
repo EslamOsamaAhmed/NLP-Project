@@ -2,26 +2,27 @@
 # Project Overview :
 	We Have A Binary Classification Problem of defining whether the E-mail Is a spam or ham Email.
 
-# DataSets :
+## DataSets :
 	1) " dataset-1.csv " -> IS A labeled dataset consists of 5175  Record (or "spam and ham E-mails observations ").
 	2) " dataset-2.csv " -> IS A labeled dataset consists of 5573  Record (or "spam and ham E-mails observations ").
 	3) " dataset-3.csv " -> IS A labeled dataset consists of 30000 Record (or "spam and ham E-mails observations ").
 
-# DataSets Preprocessing :
+## DataSets Preprocessing :
 	Our Three Datasets were four folders ('enron1 , enron2 , enron3 , enron4') each separated to spam file consists of spams.txt ('spam emails observations in txt files format') and the same for hams.txt ('ham emails observations  in txt files format') , so we made some processing steps on those folders for converting it to ('spam-ham.csv') file .
 	=》 Firstly , we Imported the necessary libraris we have used :
 
-# Prerequests:
+## Prerequests:
     install numpy, keras, sklearn, pandas, matplotlib
   
-# DataSets Preprocessing :
+## DataSets Preprocessing :
+```bash
     **
     import os
     import pandas as pd 
     import codecs        # For Opening .txt files 
     import random
     **
-
+```
 	=》 Then , defining A set for each class :
 
 **
@@ -108,7 +109,7 @@
 
 *************************************************************************************************************************************
 
-# Introduction : 
+## KNN Introduction : 
     K-Nearest Neighbors algorithm (or k-NN for short) is a non-parametric method used for classification and regression. In both cases, the input consists of the k closest training examples in the feature space. The output depends on whether k-NN is used for classification or regression:
 
     In k-NN classification, the output is a class membership. An object is classified by a majority vote of its neighbors, with the object being assigned to the class most common among its k nearest neighbors (k is a positive integer, typically small). If k = 1, then the object is simply assigned to the class of that single nearest neighbor.
@@ -125,7 +126,7 @@ The main concern with optimizing the KNN classifier is to select the right numbe
 ******************************
 
 
-#Conclusion :
+# Conclusion :
 
     In terms of values of K When we tried picking very small values for K that is 1 or 2 then the knn classifier was over fitting the dataset. Because it was trying to build individual data points with their own individual decision boundaries. So, the classifier was performing better on training dataset that is was giving better accuracies on it whereas on test dataset the accuracy was getting reduced.
 
@@ -135,24 +136,24 @@ The main concern with optimizing the KNN classifier is to select the right numbe
 *********************************
 
 
-#requirments : 
-
+# Requirments : 
+```python
     Python 3.x
     numpy
     scikit-learn
     scipy
-
+```
  *******************************
 
-#Packages for visualization :
-
+# Packages for visualization :
+```python
     import numpy as np
     %matplotlib inline
     import matplotlib.pyplot as plt
-
+```
 *************************************
 
-#Dataset Format : 
+# Dataset Format : 
 
     CSV (Comma Separated Values) format.
     Attributes can be integer or real values.
@@ -165,7 +166,7 @@ The main concern with optimizing the KNN classifier is to select the right numbe
 ***************************************
 
 
-#Algorithm :
+# Algorithm :
 
     It generates k * c new features, where c is the number of class labels. The new features are computed from the distances between the observations and their k nearest neighbors inside each class, as follows:
 
@@ -177,7 +178,7 @@ The main concern with optimizing the KNN classifier is to select the right numbe
 
 ************************************
 
-#Overview of the different implementations (Python/R/Matlab) :
+# Overview of the different implementations (Python/R/Matlab) :
 
     Of the three implementations provided here, the Python implementation is the most thoroughly tested and the fastest. However, all implementations run reasonably fast - typically on the order of seconds or minutes for datasets containing < 5,000 cells. For larger datasets, we recommend using the Python implementation. The Python implementation also provides a command-line interface (see below), which makes it easy to use for non-Python users.
 
@@ -185,7 +186,7 @@ The main concern with optimizing the KNN classifier is to select the right numbe
 
 *********************************
 
-#Notes :
+# Notes :
 
     Keep the data set files in the working directory of project as defined by the IDE configuration.
     When running in stand alone mode (E.g. command line), keep the data sets in the same directory as the script.
@@ -289,15 +290,17 @@ The main concern with optimizing the KNN classifier is to select the right numbe
     And fit these on Traning Mails to fit the tokenz on it using tok the convert it to using 
     **texts_to_sequences** tok.texts_to_sequences(X_train) 
 
-inputs = Input(name='inputs',shape=[max_len])
-layer = Embedding(max_words,50,input_length=max_len)(inputs)
-layer = LSTM(64)(layer)
-layer = Dense(256,name='FC1')(layer)
-layer = Activation('relu')(layer)
-layer = Dropout(0.5)(layer)
-layer = Dense(1,name='out_layer')(layer)
-layer = Activation('sigmoid')(layer)
-model = Model(inputs=inputs,outputs=layer)
+```python
+    inputs = Input(name='inputs',shape=[max_len])
+    layer = Embedding(max_words,50,input_length=max_len)(inputs)
+    layer = LSTM(64)(layer)
+    layer = Dense(256,name='FC1')(layer)
+    layer = Activation('relu')(layer)
+    layer = Dropout(0.5)(layer)
+    layer = Dense(1,name='out_layer')(layer)
+    layer = Activation('sigmoid')(layer)
+    model = Model(inputs=inputs,outputs=layer)
+```
 
 **RNN** Using LSTM Layers beside Dense Layers to match the training on the sequence of the seneteces after convert it using texts_to_sequences and then apply LSTM Layern on it with its Hyper Parameters and Activation Functions then fit the training sentences (Training Sequences) to the Training Labels.
 
